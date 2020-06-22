@@ -9,9 +9,20 @@ class Game
 		puts @master_code
 	end
 
-	def play_round
-		player_guess = @codebreaker.make_guess
-		check_guess(player_guess)
+	def play_game
+		for i in (12).downto(1)
+			puts "You have #{i} guesses left!"
+			player_guess = @codebreaker.make_guess
+			hint = check_guess(player_guess)
+			if hint[:black] == 4
+				puts "Congratulations! You have guessed the secret code!"
+				break
+			elsif i > 1
+				puts "Here's some hints to help you #{hint}"
+				puts "Please make your next guess"
+			end
+		end
+		puts "Oh no. You ran out of tries..."
 	end
 
 	def check_guess(player_guess)
@@ -28,10 +39,10 @@ class Game
 				player_guess[i] = ""
 			end
 		end
-		puts hint	
+		return hint	
 	end
 
 
 end
 
-x = Game.new.play_round
+x = Game.new.play_game
