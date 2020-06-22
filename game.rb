@@ -3,13 +3,14 @@ require_relative 'codebreaker'
 require_relative 'codemaker'
 
 class Game
-	def initialize
-		@codebreaker = CodeBreaker.new
-		@master_code = ["r","r","y","y"]#CodeMaker.new.make_code
-		puts @master_code
+	def initialize(game_mode)
+		@codebreaker = CodeBreaker.new(game_mode)
+		@master_code = CodeMaker.new.make_code(game_mode)
 	end
 
 	def play_game
+		puts "Try your best to guess the code of 4 ordered coloured pins! Colours 
+					consists of red, blue, green, yellow, black and white!"
 		for i in (12).downto(1)
 			puts "You have #{i} guesses left!"
 			player_guess = @codebreaker.make_guess
@@ -20,9 +21,10 @@ class Game
 			elsif i > 1
 				puts "Here's some hints to help you #{hint}"
 				puts "Please make your next guess"
+			else
+				puts "Oh no. You ran out of tries..."
 			end
 		end
-		puts "Oh no. You ran out of tries..."
 	end
 
 	def check_guess(player_guess)
@@ -41,8 +43,6 @@ class Game
 		end
 		return hint	
 	end
-
-
 end
 
 x = Game.new.play_game

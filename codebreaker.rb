@@ -4,7 +4,8 @@ class CodeBreaker
 	end
 
 	def make_guess
-		puts "Please input your guess of four colours with spaces in between each guess"
+		puts "Please input your guess of four colours with spaces in between 
+					each guess"
 		guess = gets.chomp.downcase.split
 	end
     
