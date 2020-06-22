@@ -9,6 +9,3 @@ class CodeBreaker
 	end
     
 end
-
-x= CodeBreaker.new.make_guess
-puts x

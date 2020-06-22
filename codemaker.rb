@@ -11,6 +11,3 @@ class CodeMaker
 			code.map{|color| COLOURS[rand(5)]}
 	end
 end
-
-x = CodeMaker.new
-puts x.code
