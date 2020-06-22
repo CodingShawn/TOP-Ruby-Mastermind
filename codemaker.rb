@@ -7,7 +7,7 @@ class CodeMaker
 			@code = make_code
 		else 
 			print "Please input 4 different colours with spaces in between each colour" 
-			puts "to set your code!"
+			puts " to set your code!"
 			@code = gets.chomp.split
 		end	
 	end
