@@ -3,9 +3,13 @@ require_relative 'codebreaker'
 require_relative 'codemaker'
 
 class Game
-	def initialize(game_mode)
+	attr_reader :score
+	def initialize()
+		puts "Do you want to play as a codebreaker(default option) or codemaker?"
+		game_mode = gets.chomp	
 		@codebreaker = CodeBreaker.new
 		@master_code = CodeMaker.new(game_mode).code
+		@score = 0
 		if game_mode == 'codebreaker'
 			play_game_codebreaker
 		else
@@ -15,7 +19,7 @@ class Game
 
 	def play_game_codebreaker
 		print "Try your best to guess the code of 4 ordered coloured pins! Colours" 
-		puts	"consists of red, blue, green, yellow, black and white!"
+		puts	" consists of red, blue, green, yellow, black and white!"
 		for i in (12).downto(1)
 			puts "You have #{i} guesses left!"
 			player_guess = @codebreaker.make_guess
@@ -35,8 +39,10 @@ class Game
 	def play_game_codemaker
 		puts "The computer will now try to guess your code!"
 		sleep 0.5
+		hint = {}
+		computer_guess = []
 		for i in (12).downto(1)
-			computer_guess = @codebreaker.computer_make_guess
+			computer_guess = i == 12? @codebreaker.computer_make_initial_guess : @codebreaker.computer_make_smart_guess(hint[:black], hint[:white], computer_guess)
 			print "The computer guessed #{computer_guess[0]}, #{computer_guess[1]}, " 
 			puts  "#{computer_guess[2]}, #{computer_guess[3]}"
 			sleep 0.7
@@ -60,17 +66,25 @@ class Game
 		for i in 0..3 #check how many black pins to give
 			if @master_code[i] == guess[i]
 				hint[:black] += 1
-				guess[i] = ""
 			end
+		end
+		guess_hash = guess.inject(Hash.new) do |acc, color|
+			if acc.has_key?(color)
+				acc[color] += 1	
+			else
+				acc[color] = 1
+			end
+			acc
 		end
 		for i in 0..3 #check how many white pins to give
-			if @master_code.any? guess[i]
+			if guess_hash.has_key?(@master_code[i]) && guess_hash[@master_code[i]] > 0
+				guess_hash[@master_code[i]] -= 1
 				hint[:white] += 1
-				guess[i] = ""
 			end
 		end
+		hint[:white] -= hint[:black]
 		return hint	
 	end
 end
 
-x = Game.new("codemaker")
+x = Game.new

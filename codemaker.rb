@@ -12,7 +12,8 @@ class CodeMaker
 		end	
 	end
 
-	def make_code
+	def make_code 
+		#computer to randomly generate code
 			code = Array.new(4)
 			code.map{|color| COLOURS[rand(5)]}
 	end
