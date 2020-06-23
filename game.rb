@@ -5,7 +5,7 @@ require_relative 'codemaker'
 class Game
 	attr_reader :score
 	def initialize()
-		puts "Do you want to play as a codebreaker(default option) or codemaker?"
+		puts "Do you want to play as a codebreaker or codemaker(default option)?"
 		game_mode = gets.chomp	
 		@codebreaker = CodeBreaker.new
 		@master_code = CodeMaker.new(game_mode).code
