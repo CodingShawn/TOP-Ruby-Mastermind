@@ -1,4 +1,3 @@
-require 'pry'
 class CodeBreaker
 	COLOURS = ["red", "blue", "green", "yellow", "black", "white"]
 	def initialize

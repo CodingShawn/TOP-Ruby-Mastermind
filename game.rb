@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'codebreaker'
 require_relative 'codemaker'
 
