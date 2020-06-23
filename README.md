@@ -10,3 +10,6 @@ Guess of order and colour of 4 pins.
 
 Output:<br/>
 Feedback on how close the guess is or when correct guess has been made or when game is over
+
+AI:<br/>
+Tweaked algorithmn till computer is able to get 68.5% correct guesses in 100000 tries
