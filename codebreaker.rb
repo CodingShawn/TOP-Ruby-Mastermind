@@ -2,6 +2,8 @@ require 'pry'
 class CodeBreaker
 	COLOURS = ["red", "blue", "green", "yellow", "black", "white"]
 	def initialize
+		@confirmed_colours = []
+		@count = 0 #keep track of current round
 	end
 
 	def make_guess
@@ -9,25 +11,27 @@ class CodeBreaker
 		guess = gets.chomp.downcase.split
 	end
 
-	def computer_make_initial_guess
-		guess = Array.new(4)
-		guess.map{|color| COLOURS[rand(5)]}
+	def computer_make_guess(black, guess)
+		for i in 0..(black - 1)
+			#add correct number of colours in code to confirmed guess
+			@confirmed_colours += [guess[0]]
+		end
+		if @confirmed_colours.length < 4 
+			#as haven't confirmed colours, continue guessing full colours and adding
+			#correct colours to confirmed colours
+			new_guess = computer_full_colour_guess
+			@count += 1
+			return new_guess
+		else
+			return swap_pins(@confirmed_colours)
+		end
 	end
 
-	def computer_make_smart_guess(black, white, guess)
-		remaining_colour = COLOURS - [guess[rand(3-black-white)]]
-		for i in 0..(3-white-black)
-			guess[rand(3)] = remaining_colour[rand(remaining_colour.length - 1)]
-		end
-		case white
-		when 1..3
-			guess = swap_pins(guess)
-		when 4 
-			guess = swap_pins(guess)
-			guess = swap_pins(guess)
-		end
-		return guess
-	end	
+	def computer_full_colour_guess 
+		#guess all 4 pins as same colours to determine which colored pins present
+		guess = Array.new(4)
+		guess.map{|color| COLOURS[@count]}
+	end
 
 	def swap_pins(guess)
 		swap1 = rand(3)

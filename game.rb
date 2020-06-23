@@ -42,7 +42,7 @@ class Game
 		hint = {}
 		computer_guess = []
 		for i in (12).downto(1)
-			computer_guess = i == 12? @codebreaker.computer_make_initial_guess : @codebreaker.computer_make_smart_guess(hint[:black], hint[:white], computer_guess)
+			computer_guess = @codebreaker.computer_make_guess(hint[:black] == nil ? 0 : hint[:black], computer_guess)
 			print "The computer guessed #{computer_guess[0]}, #{computer_guess[1]}, " 
 			puts  "#{computer_guess[2]}, #{computer_guess[3]}"
 			sleep 0.7
